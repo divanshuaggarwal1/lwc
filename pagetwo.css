@@ -1,0 +1,21 @@
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+
+}
+.slds-p-bottom_small {
+    margin-bottom: 1rem;
+}
+.input-wrapper{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.innerDiv {
+    width: 100%;
+}

@@ -1,0 +1,13 @@
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 300px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+
+}
+.des{
+    margin-top: 20px;
+
+}
