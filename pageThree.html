@@ -89,12 +89,12 @@
                             </td>
                             <td >
                                 <lightning-combobox class="slds-m-bottom_small" data-id={row.id} data-field="decimal" placeholder="Select an Option"
-                                    value={row.decimal} options={decimalOptions} onchange={handleInputChange}>
+                                    value={row.decimal} options={decimalOptions} onchange={handleInputChange}  disabled={row.isDecimalDisabled} >
                                 </lightning-combobox>
                             </td>
                             <td >
                                 <lightning-input class="slds-m-bottom_small" value={row.length} data-id={row.id} data-field="length"
-                                    placeholder="Length" onchange={handleInputChange}>
+                                    placeholder="Length" onchange={handleInputChange} disabled={row.isLengthDisabled}>
                                 </lightning-input>
                             </td>
                             <td >
@@ -141,7 +141,7 @@
                     </lightning-progress-indicator>
                 </div>
 
-                <lightning-button label="Next" variant="brand" onclick={handleNext}></lightning-button>
+                <lightning-button label="Submit/Activate" variant="brand" onclick={handleNext}></lightning-button>
 
             </div>
         </div>
