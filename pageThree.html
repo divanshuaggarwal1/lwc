@@ -75,45 +75,45 @@
                     <template for:each={data} for:item="row">
                         <tr key={row.id}>
                             <td>
-                                <div class="slds-truncate" title={row.index}>{row.index}</div>
+                                <div class="slds-m-top_small" title={row.index}>{row.index}</div>
                             </td>
                             <td>
-                                <lightning-input value={row.name} data-id={row.id} data-field="name" placeholder="name"
+                                <lightning-input class="slds-m-bottom_small" value={row.name} data-id={row.id} data-field="name" placeholder="Name"
                                     onchange={handleInputChange}>
                                 </lightning-input>
                             </td>
-                            <td>
-                                <lightning-combobox data-id={row.id} data-field="type" placeholder="Select an Option"
+                            <td >
+                                <lightning-combobox class="slds-m-bottom_small" data-id={row.id} data-field="type" placeholder="Select an Option"
                                     value={row.type} options={fieldTypeOptions} onchange={handleInputChange}>
                                 </lightning-combobox>
                             </td>
-                            <td>
-                                <lightning-combobox data-id={row.id} data-field="decimal" placeholder="Select an Option"
+                            <td >
+                                <lightning-combobox class="slds-m-bottom_small" data-id={row.id} data-field="decimal" placeholder="Select an Option"
                                     value={row.decimal} options={decimalOptions} onchange={handleInputChange}>
                                 </lightning-combobox>
                             </td>
-                            <td>
-                                <lightning-input value={row.length} data-id={row.id} data-field="length"
-                                    placeholder="length" onchange={handleInputChange}>
+                            <td >
+                                <lightning-input class="slds-m-bottom_small" value={row.length} data-id={row.id} data-field="length"
+                                    placeholder="Length" onchange={handleInputChange}>
                                 </lightning-input>
                             </td>
-                            <td>
-                                <lightning-input type="checkbox" checked={row.filterable} data-id={row.id}
+                            <td >
+                                <lightning-input class ="slds-m-top_small" type="checkbox" checked={row.filterable} data-id={row.id}
                                     data-field="filterable" onchange={handleInputChange}>
                                 </lightning-input>
                             </td>
-                            <td>
-                                <lightning-input type="checkbox" checked={row.externalId} data-id={row.id}
+                            <td >
+                                <lightning-input class ="slds-m-top_small" type="checkbox" checked={row.externalId} data-id={row.id}
                                     data-field="externalId" onchange={handleInputChange}>
                                 </lightning-input>
                             </td>
-                            <td>
-                                <lightning-input type="checkbox" checked={row.sortable} data-id={row.id}
+                            <td >
+                                <lightning-input class ="slds-m-top_small" type="checkbox" checked={row.sortable} data-id={row.id}
                                     data-field="sortable" onchange={handleInputChange}>
                                 </lightning-input>
                             </td>
-                            <td>
-                                <lightning-button-icon icon-name="utility:delete" alternative-text="Delete"
+                            <td >
+                                <lightning-button-icon class ="slds-m-top_small" icon-name="utility:delete" alternative-text="Delete"
                                     data-id={row.id} onclick={handleDeleteRow} disabled={row.disableDelete}>
 
                                 </lightning-button-icon>
