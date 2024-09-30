@@ -12,14 +12,21 @@ export default class PageThree extends LightningElement {
             filterable: false,
             externalId: false,
             sortable: false,
-            disableDelete: true
+            disableDelete: false
 
         }
     ];
     fieldTypeOptions = [
         { label: 'Text', value: 'Text' },
         { label: 'Number', value: 'Number' },
-        { label: 'Date', value: 'Date' }
+        { label: 'Date/Time', value: 'Date/Time' },
+        { label: 'Date', value: 'Date' },
+        { label: 'Time	', value: 'Time	' },
+        { label: 'TextArea', value: 'TextArea' },
+        { label: 'Checkbox', value: 'Checkbox' },
+        { label: 'URL', value: 'URL' },
+        { label: 'Phone', value: 'Phone' },
+        { label: 'Percent', value: 'Percent' }
     ];
     decimalOptions = [
         { label: '0', value: '0' },
@@ -71,22 +78,46 @@ export default class PageThree extends LightningElement {
         // console.log('Updated data:', JSON.stringify(this.data, null, 2));
         if (this.data[0].name && this.data[0].type && this.data[0].decimal && this.data[0].length) {
             setTimeout(() => {
-                console.log('First row data:', JSON.stringify(this.data[0], null, 2));
+                console.log('First row data:', JSON.stringify(this.data[0]));
             }, 0);
         }
 
     }
 
+    // handleDeleteRow(event) {
+    //     console.log("delete test::" + event);
+    //     const id = event.target.dataset.id;
+    //     this.data = this.data.filter((row) => row.id != id);
+    //     this.setRowIndices();
+    //     //this.data = this.data.filter((row) => row.id != id).map((row, idx) => ({
+    //     //     ...row,
+    //     //     index: idx + 1 // Recalculate index for remaining rows
+    //     // }));
+    // }
     handleDeleteRow(event) {
-        console.log("delete test::" + event);
         const id = event.target.dataset.id;
-        this.data = this.data.filter((row) => row.id != id);
-        this.setRowIndices();
-        //this.data = this.data.filter((row) => row.id != id).map((row, idx) => ({
-        //     ...row,
-        //     index: idx + 1 // Recalculate index for remaining rows
-        // }));
+        if (id == 1) {
+            this.data = this.data.map((row) => {
+                if (row.id == 1) {
+                    return {
+                        ...row,
+                        name: '',
+                        type: '',
+                        decimal: '',
+                        length: '',
+                        filterable: false,
+                        externalId: false,
+                        sortable: false
+                    };
+                }
+                return row;
+            });
+        } else {
+            this.data = this.data.filter((row) => row.id != id);
+            this.setRowIndices();
+        }
     }
+    
     connectedCallback() {
         // Set initial index for rows
         this.setRowIndices();
