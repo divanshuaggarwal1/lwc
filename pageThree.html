@@ -1,169 +1,141 @@
 <template>
-    <lightning-card title={cardTitle}>
-        <div class="slds-card__body slds-card__body_inner slds-border_top">
 
-            <div class="slds-m-around_medium ">
-                <div class="slds-scrollable_x">
-                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-                            <thead>
-                                <tr class="slds-line-height_reset">
+    <div class="slds-card__body slds-card__body_inner slds-border_top">
 
-                                    <th scope="col" class="slds-col slds-size_1-of-12">
-                                        <div class="slds-truncate" title="No.">No.</div>
-                                    </th>
+        <div class="slds-m-around_medium ">
+            <div class="slds-scrollable_x">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
 
-                                    <th scope="col" class="slds-col slds-size_2-of-12">
-                                        <div class="slds-truncate" title="Field Name">
-                                            <lightning-icon icon-name="utility:user" alternative-text="Field Name"
-                                                size="x-small" class="slds-m-right_xx-small"></lightning-icon> Field Name
-                                        </div>
-                                    </th>
+                            <th scope="col" class="slds-size_1-of-12">
+                                <div class="slds-truncate" title="No.">No.</div>
+                            </th>
 
-                                    <th scope="col" class="slds-col slds-size_2-of-12">
-                                        <div class="slds-truncate" title="Field Type">
-                                            <lightning-icon icon-name="utility:company" alternative-text="Field Type"
-                                                size="x-small" class="slds-m-right_xx-small"></lightning-icon> Field Type
-                                        </div>
-                                    </th>
+                            <th scope="col" class="slds-size_2-of-12">
+                                <div class="slds-truncate" title="Field Name">
+                                    <lightning-icon icon-name="utility:user" alternative-text="Field Name"
+                                        size="x-small" class="slds-m-right_xx-small"></lightning-icon> Field Name
+                                </div>
+                            </th>
 
-                                    <th scope="col" class="slds-col slds-size_2-of-12">
-                                        <div class="slds-truncate" title="Decimal">
-                                            <lightning-icon icon-name="utility:desktop_console"
-                                                alternative-text="Decimal" size="x-small"
-                                                class="slds-m-right_xx-small"></lightning-icon> Decimal
-                                        </div>
-                                    </th>
+                            <th scope="col" class=" slds-size_2-of-12">
+                                <div class="slds-truncate" title="Field Type">
+                                    <lightning-icon icon-name="utility:company" alternative-text="Field Type"
+                                        size="x-small" class="slds-m-right_xx-small"></lightning-icon> Field Type
+                                </div>
+                            </th>
 
-                                    <th scope="col" class="slds-col slds-size_1-of-12">
-                                        <div class="slds-truncate" title="Length">
-                                            Length
-                                        </div>
-                                    </th>
+                            <th scope="col" class="slds-size_2-of-12">
+                                <div class="slds-truncate" title="Decimal">
+                                    <lightning-icon icon-name="utility:desktop_console" alternative-text="Decimal"
+                                        size="x-small" class="slds-m-right_xx-small"></lightning-icon> Decimal
+                                </div>
+                            </th>
 
-                                    <th scope="col" class="slds-col slds-size_1-of-12">
-                                        <div class="slds-truncate" title="Filterable">
-                                            <lightning-icon icon-name="utility:filterList" alternative-text="Filterable"
-                                                size="x-small" class="slds-m-right_xx-small"></lightning-icon>
-                                            Filterable
-                                        </div>
-                                    </th>
+                            <th scope="col" class="slds-size_1-of-12">
+                                <div class="slds-truncate" title="Length">
+                                    Length
+                                </div>
+                            </th>
 
-                                    <th scope="col" class="slds-col slds-size_1-of-12">
-                                        <div class="slds-truncate" title="External ID">
-                                            External ID
-                                        </div>
-                                    </th>
+                            <th scope="col" class="slds-size_1-of-12">
+                                <div class="slds-truncate" title="Filterable">
+                                    <lightning-icon icon-name="utility:filterList" alternative-text="Filterable"
+                                        size="x-small" class="slds-m-right_xx-small"></lightning-icon>
+                                    Filterable
+                                </div>
+                            </th>
 
-                                    <th scope="col" class="slds-col slds-size_1-of-12">
-                                        <div class="slds-truncate" title="Sortable">
-                                            <lightning-icon icon-name="utility:sort" alternative-text="Sortable"
-                                                size="x-small" class="slds-m-right_xx-small"></lightning-icon>
-                                            Sortable
-                                        </div>
-                                    </th>
+                            <th scope="col" class="slds-size_1-of-12">
+                                <div class="slds-truncate" title="External ID">
+                                    External ID
+                                </div>
+                            </th>
 
-                                    <th scope="col" class="slds-col slds-size_1-of-12">
-                                        <div class="slds-truncate" title="Action">
-                                            <lightning-icon icon-name="utility:delete" alternative-text="Sortable"
-                                                size="x-small" class="slds-m-right_xx-small"></lightning-icon>
-                                            Delete Row
-                                        </div>
-                                    </th>
+                            <th scope="col" class="slds-size_1-of-12">
+                                <div class="slds-truncate" title="Sortable">
+                                    <lightning-icon icon-name="utility:sort" alternative-text="Sortable" size="x-small"
+                                        class="slds-m-right_xx-small"></lightning-icon>
+                                    Sortable
+                                </div>
+                            </th>
 
-                                </tr>
-                            </thead>
+                            <th scope="col" class="slds-size_1-of-12">
+                                <div class="slds-truncate" title="Action">
+                                    <lightning-icon icon-name="utility:delete" alternative-text="Sortable"
+                                        size="x-small" class="slds-m-right_xx-small"></lightning-icon>
+                                    Delete Row
+                                </div>
+                            </th>
 
-                            <tbody>
-                                <template for:each={data} for:item="row">
-                                    <tr key={row.id}>
-                                        <td class="slds-col slds-size_1-of-12">
-                                            <div class="slds-m-top_small" title={row.index}>{row.index}</div>
-                                        </td>
-                                        <td class="slds-col slds-size_2-of-12">
-                                            <lightning-input class="slds-m-bottom_small" value={row.name}
-                                                data-id={row.id} data-field="name" placeholder="Name"
-                                                onchange={handleInputChange}>
-                                            </lightning-input>
-                                        </td>
-                                        <td class="slds-col slds-size_2-of-12">
-                                            <lightning-combobox class="slds-m-bottom_small" data-id={row.id}
-                                                data-field="fieldType" placeholder="Select an Option" value={row.fieldType}
-                                                options={fieldTypeOptions} onchange={handleInputChange}>
-                                            </lightning-combobox>
-                                        </td>
-                                        <td class="slds-col slds-size_2-of-12">
-                                            <lightning-combobox class="slds-m-bottom_small" data-id={row.id}
-                                                data-field="decimalValue" placeholder="Select an Option" value={row.decimalValue}
-                                                options={decimalOptions} onchange={handleInputChange}
-                                                disabled={row.isDecimalDisabled}>
-                                            </lightning-combobox>
-                                        </td>
-                                        <td class="slds-col slds-size_1-of-12">
-                                            <lightning-input class="slds-m-bottom_small" value={row.length}
-                                                data-id={row.id} data-field="length" placeholder="Length"
-                                                onchange={handleInputChange} disabled={row.isLengthDisabled}>
-                                            </lightning-input>
-                                        </td>
-                                        <td class="slds-col slds-size_1-of-12">
-                                            <lightning-input class="slds-m-top_small" type="checkbox"
-                                                checked={row.filterable} data-id={row.id} data-field="filterable"
-                                                onchange={handleInputChange}>
-                                            </lightning-input>
-                                        </td>
-                                        <td class="slds-col slds-size_1-of-12">
-                                            <lightning-input class="slds-m-top_small" type="checkbox"
-                                                checked={row.externalId} data-id={row.id} data-field="externalId"
-                                                onchange={handleInputChange}>
-                                            </lightning-input>
-                                        </td>
-                                        <td class="slds-col slds-size_1-of-12">
-                                            <lightning-input class="slds-m-top_small" type="checkbox"
-                                                checked={row.sortable} data-id={row.id} data-field="sortable"
-                                                onchange={handleInputChange}>
-                                            </lightning-input>
-                                        </td>
-                                        <td class="slds-col slds-size_1-of-12">
-                                            <lightning-button-icon class="slds-m-top_small" icon-name="utility:delete"
-                                                alternative-text="Delete" data-id={row.id} onclick={handleDeleteRow}
-                                                disabled={row.disableDelete}>
+                        </tr>
+                    </thead>
 
-                                            </lightning-button-icon>
-                                        </td>
-                                    </tr>
-                                </template>
-                            </tbody>
-                        </table>
-                </div>
+                    <tbody>
+                        <template for:each={fieldData} for:item="row">
+                            <tr key={row.id}>
+                                <td class="slds-size_1-of-12">
+                                    <div class="slds-m-top_small" title={row.index}>{row.index}</div>
+                                </td>
+                                <td class="slds-size_2-of-12">
+                                    <lightning-input class="slds-m-bottom_small" value={row.name} data-id={row.id}
+                                        data-field="name" placeholder="Name" onchange={handleInputChange}>
+                                    </lightning-input>
+                                </td>
+                                <td class="slds-size_2-of-12">
+                                    <lightning-combobox class="slds-m-bottom_small" data-id={row.id}
+                                        data-field="fieldType" placeholder="Select an Option" value={row.fieldType}
+                                        options={fieldTypeOptions} onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </td>
+                                <td class="slds-size_2-of-12">
+                                    <lightning-combobox class="slds-m-bottom_small" data-id={row.id}
+                                        data-field="decimalValue" placeholder="Select an Option"
+                                        value={row.decimalValue} options={decimalOptions} onchange={handleInputChange}
+                                        disabled={row.isDecimalDisabled}>
+                                    </lightning-combobox>
+                                </td>
+                                <td class="slds-size_1-of-12">
+                                    <lightning-input class="slds-m-bottom_small" value={row.length} data-id={row.id}
+                                        data-field="length" placeholder="Length" onchange={handleInputChange}
+                                        disabled={row.isLengthDisabled}>
+                                    </lightning-input>
+                                </td>
+                                <td class="slds-size_1-of-12">
+                                    <lightning-input class="slds-m-top_small" type="checkbox" checked={row.filterable}
+                                        data-id={row.id} data-field="filterable" onchange={handleInputChange}>
+                                    </lightning-input>
+                                </td>
+                                <td class="slds-size_1-of-12">
+                                    <lightning-input class="slds-m-top_small" type="checkbox" checked={row.externalId}
+                                        data-id={row.id} data-field="externalId" onchange={handleInputChange}>
+                                    </lightning-input>
+                                </td>
+                                <td class="slds-size_1-of-12">
+                                    <lightning-input class="slds-m-top_small" type="checkbox" checked={row.sortable}
+                                        data-id={row.id} data-field="sortable" onchange={handleInputChange}>
+                                    </lightning-input>
+                                </td>
+                                <td class="slds-size_1-of-12">
+                                    <lightning-button-icon class="slds-m-top_small" icon-name="utility:delete"
+                                        alternative-text="Delete" data-id={row.id} onclick={handleDeleteRow}
+                                        disabled={row.disableDelete}>
 
-                <div style="margin-top: 20px;">
-
-                    <lightning-button label="+ Add Row" onclick={handleAddRow}
-                        class="slds-m-bottom_medium slds-m-top_large"></lightning-button>
-
-                </div>
+                                    </lightning-button-icon>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
             </div>
-            <footer class="slds-card__footer">
 
-                <div class="slds-grid slds-m-top_medium slds-grid_vertical-align-center">
+            <div style="margin-top: 20px;">
 
-                    <lightning-button label="Previous" variant="neutral" onclick={handlePrevious}></lightning-button>
+                <lightning-button label="+ Add Row" onclick={handleAddRow}
+                    class="slds-m-bottom_medium slds-m-top_large"></lightning-button>
 
-                    <div class="slds-col slds-text-align_center">
-                        <lightning-progress-indicator current-step="3" type="base" variant="base">
-                            <lightning-progress-step label="Step One" value="1"></lightning-progress-step>
-                            <lightning-progress-step label="Step Two" value="2"></lightning-progress-step>
-                            <lightning-progress-step label="Step Three" value="3"></lightning-progress-step>
-                        </lightning-progress-indicator>
-                    </div>
-
-                    <lightning-button label="Submit/Activate" variant="brand" onclick={handleNext}></lightning-button>
-
-                </div>
-            </footer>
-
+            </div>
         </div>
-
-
-    </lightning-card>
-
+    </div>
 </template>
