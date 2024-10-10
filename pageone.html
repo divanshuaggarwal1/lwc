@@ -1,41 +1,69 @@
 <template>
-    <div class="slds-card">
-        <div class="slds-card__body slds-card__body_inner">
-            <div
-                class="slds-p-top_small slds-p-bottom_medium slds-align_absolute-center slds-theme_default slds-text-heading_medium">
-                <b> Create Data Virtulization Object </b>
-            </div>
-            <div class="slds-grid slds-gutters">
 
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-input label="Data virtulization object name" name="object"
-                        placeholder="Enter virtualization object name" required>
-                    </lightning-input>
+    <div class="slds-card__body slds-card__body_inner slds-border_top">
+
+        <div class="slds-card">
+            <div class="slds-card__body slds-card__body_inner">
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <template for:each={inputFields} for:item="field">
+                        <div key={field.name} class="slds-col slds-size_1-of-2 slds-p-around_small">
+                            <lightning-input label={field.label} name={field.name} value={field.value}
+                                placeholder={field.placeholder} type={field.type} onchange={handleInputChange}
+                                required={field.required}>
+                            </lightning-input>
+                        </div>
+                    </template>
+                    <div class="slds-size_1-of-2 ">
+
+                        <lightning-textarea class="custom-textarea" label="Description" name="Description"
+                            value={formData.Description} placeholder="Enter a template Description"
+                            onchange={handleInputChange}>
+                        </lightning-textarea>
+                    </div>
                 </div>
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-input label="Data virtulization source name" name="source"
-                        placeholder="Enter virtualization object name" required>
-
-                    </lightning-input>
-                </div>
             </div>
-
-
-            <lightning-textarea class = "des"
-                label="Streamline your data experience with our data virtulization feature. Connect to different data sources in real-time without the need to move or duplicate"
-                name="Description"
-                placeholder="Enter a template Description">
-            </lightning-textarea>
-        </div>
-        <div class="buttons">
-            <button class="slds-button slds-button_neutral" disabled>Previous</button>
-            <button class="slds-button slds-button_brand">Next</button>
         </div>
     </div>
-
-
-    <template if:true={Details}>
-        <c-pagetwo> </c-pagetwo>
-    </template>
 </template>
+<!-- <template>
 
+    <div class="slds-card__body slds-card__body_inner slds-border_top">
+
+        <div class="slds-card">
+            <div class="slds-card__body slds-card__body_inner">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input label="Data virtualization object name" name="object"
+                            placeholder="Enter virtualization object name"  onchange={handleInputChange} required>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input label="Data virtualization source name" name="source"
+                            placeholder="Enter virtualization object name"  onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input label="Data virtualization Service name" name="service"
+                            placeholder="Enter virtualization Service name"  onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+
+                            <lightning-textarea class="custom-textarea" label="Description" name="Description"
+                                placeholder="Enter a template Description"  onchange={handleInputChange}
+                                >
+                            </lightning-textarea>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</template> -->
