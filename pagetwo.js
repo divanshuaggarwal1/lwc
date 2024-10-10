@@ -1,99 +1,96 @@
 import { LightningElement, track } from 'lwc';
-
+import {loadStyle} from 'lightning/platformResourceLoader';
+import getRecordName from '@salesforce/apex/DataTable.getRecordName';
+import RemoveLWCCss from '@salesforce/resourceUrl/RemoveLWCCss';
 export default class Pagetwo extends LightningElement {
-    @track selectedRecordId = '';
-    @track selectedRecordId1 = '';
-    @track selectedRecordId2 = '';
-    @track selectedRecordId3 = '';
-    @track selectedRecordId4 = '';
-    data = ''
-    data1 = ''
-    data2 = ''
-    data3 = ''
-    data4 = ''
-    @track selectedValue = 'Account';
-        currentStep = '2';
+    @track records = {}; // Initialize an empty object
+    
+    @track selectedValue = 'lwapic__Integration_Channel__c';
+    currentStep = 2;
 
     channelOptions = [
-        { label: 'Account', value: 'Account' },
-        { label: 'Contact', value: 'Contact' },
+        { label: 'Integration Channel', value: 'lwapic__Integration_Channel__c' },
+        { label: 'ETL', value: 'lwapic__ETL__c' },
     ];
+
+    renderedCallback() {
+        loadStyle(this, RemoveLWCCss);
+    }
 
     handleChannelChange(event) {
         this.selectedValue = event.detail.value;
-        // this.selectedRecordId = null;
-        // console.log('Selected channel:', this.selectedValue);
-        this.selectedRecordId = ''; 
-        this.data = ''; 
+        this.clearRecordData(); 
         console.log('Selected channel:', this.selectedValue);
-        console.log('Cleared selected record ID and URL');
-        setTimeout(() => {
-            this.selectedRecordId = ''; 
-        }, 0);
     }
     handleRecordChange(event) {
-        console.log('this.handleChannelChange : ');
-        this.selectedRecordId = event.detail.recordId;
-        console.log('this.selectedRecordId : ', this.selectedRecordId);
-        this.data = this.recordUrl();
-    }
-    recordUrl() {
-        return this.selectedRecordId ? `/lightning/r/${this.selectedRecordId}/view` : '';
-    }
+        try{
+        const index = event.target.dataset.index; // Retrieve the index from the data attribute
+        const recordId = event.detail.recordId; // Get the selected recordId
+        // const objectName = this.selectedValue; // Get the selected recordName
+        let objectName = 'lwapic__Integration_Channel__c';
+         // For record 1, use the selected channel
+         if (index === '1') {
+            objectName = this.selectedValue;
+        }
+       this.records[`data${index}`] = this.recordUrl(recordId);
 
-    handleRecordChange1(event) {
-        this.selectedRecordId1 = event.detail.recordId;
-        console.log('this.selectedRecordId1 inside handleRecordChange1: ', this.selectedRecordId1);
-        this.data1 = this.recordUrl1();
-    } 
-    recordUrl1() {
-        return this.selectedRecordId1 ? `/lightning/r/${this.selectedRecordId1}/view` : '';
-    }
+        if (recordId && objectName) {
+            getRecordName({ recordId: recordId, objectName: objectName })
+            .then(recordName => {
+                console.log(`Index: ${index}, Record ID: ${recordId}, Record Name: ${recordName}`);
+                this.records[`recordId${index}`] = recordId;
+                this.records[`recordName${index}`] = recordName;
 
-    handleRecordChange2(event) {
-        this.selectedRecordId2 = event.detail.recordId;
-        console.log('this.selectedRecordId2 inside handleRecordChange2: ', this.selectedRecordId2);
-        this.data2 = this.recordUrl2();
-    } 
-    recordUrl2() {
-        return this.selectedRecordId2 ? `/lightning/r/${this.selectedRecordId2}/view` : '';
-    }
 
-    handleRecordChange3(event) {
-        this.selectedRecordId3 = event.detail.recordId;
-        console.log('this.selectedRecordId3 inside handleRecordChange3: ', this.selectedRecordId3);
-        this.data3 = this.recordUrl3();
-    } 
-    recordUrl3() {
-        return this.selectedRecordId3 ? `/lightning/r/${this.selectedRecordId3}/view` : '';
-    }
+                const filteredRecords = this.prepareFilteredJson();
 
-    handleRecordChange4(event) {
-        this.selectedRecordId4 = event.detail.recordId;
-        console.log('this.selectedRecordId4 inside handleRecordChange4: ', this.selectedRecordId4);
-        this.data4 = this.recordUrl4();
-    } 
-    recordUrl4() {
-        return this.selectedRecordId4 ? `/lightning/r/${this.selectedRecordId4}/view` : '';
-    }
-    handleNext() {
-        this.currentStep = '3';
-    }
-    handlePrevious() {
-        this.currentStep = '1';
-    }
-    renderedCallback() {
-        if (this.channelChanged) {
-            let recordPicker = this.template.querySelector('lightning-record-picker');
-            if (recordPicker) {
-                recordPicker.value = ''; 
-                this.channelChanged = false; 
-            }
+                const recordChangeEvent = new CustomEvent('recordchange', {
+                    detail: {
+                        records: filteredRecords
+                    }
+                });
+                this.dispatchEvent(recordChangeEvent);
+                
+                console.log('Dispatched records:', filteredRecords);
+            })
+            .catch(error => {
+                console.error('Error fetching record name:', error);
+            });        
         }
     }
+    catch(e) {
+        console.error('error from page 2 :' , e.message);
+    }
+    }
+prepareFilteredJson() {
+    const selectedChannel = this.selectedChannelType(); // Either 'ETL' or 'IntegrationChannel'
+    
+    return {
+        [selectedChannel]: this.records.recordName1, 
+        "recordName2": this.records.recordName2,
+        "recordName3": this.records.recordName3,
+        "recordName4": this.records.recordName4,
+        "recordName5": this.records.recordName5
+    };
 }
 
 
+ selectedChannelType() {
+        if (this.selectedValue === 'lwapic__ETL__c') {
+            return 'ETL';
+        } else if (this.selectedValue === 'lwapic__Integration_Channel__c') {
+            return 'IntegrationChannel';
+        }
+    }   
+    
+    recordUrl(recordId) {
+        // Create the URL dynamically based on the recordId
+        return recordId ? `/lightning/r/${recordId}/view` : '';
+    }
 
-
-
+    clearRecordData() {
+        // Clear the records object dynamically
+        this.records = {};
+        console.log('Cleared all record data');
+    }
+}
