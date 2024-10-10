@@ -1,41 +1,93 @@
 public with sharing class DataTable {
     @AuraEnabled
-        public static void saveFieldData(String fieldData) {
-            System.debug('fieldList = '+fieldData);
-
-        List<cls_fieldList> fieldList = (List<cls_fieldList>) JSON.deserialize(fieldData, List<cls_fieldList>.class);
-        System.debug('fieldList = '+fieldList);
-
-        lwapic__X200_OK_Connect_Table__c connectTable = new lwapic__X200_OK_Connect_Table__c();
-        connectTable.lwapic__ExternalSource__c = 'ZenDesk';
-        connectTable.lwapic__Object_Name__c = 'Record';
-        connectTable.lwapic__Service__c = 'ZenDesk';
+    public static String getRecordName(Id recordId, String objectName) {
+        String recordName;
+        try {
+            // Dynamic SOQL to query the record name based on the object name
+            String query = 'SELECT Name FROM ' + objectName + ' WHERE Id = :recordId LIMIT 1';
+            SObject record = Database.query(query);
+            recordName = (String) record.get('Name');
+        } catch (Exception e) {
+            System.debug('Error fetching record name: ' + e.getMessage());
+            recordName = null;
+        }
+        return recordName;
+    }
+    @AuraEnabled
+    public static void saveFieldData(String fieldData) {
+        System.debug('Received JSON fieldData: ' + fieldData);
         
+        Map<String, Object> combinedData = (Map<String, Object>) JSON.deserializeUntyped(fieldData);
+    
+        String objectName = (String) combinedData.get('object');
+        String source = (String) combinedData.get('source');
+        String service = (String) combinedData.get('service');
+        String description = (String) combinedData.get('Description');
+        
+        //String etlRecord = (String) combinedData.get('ETL'); 
+        //String IntegrationRecord = (String) combinedData.get('IntegrationChannel'); 
+        String recordName2 = (String) combinedData.get('recordName2');
+        String recordName3 = (String) combinedData.get('recordName3');
+        String recordName4 = (String) combinedData.get('recordName4');
+        String recordName5 = (String) combinedData.get('recordName5');
+    
+        List<cls_fieldList> fieldList = (List<cls_fieldList>) JSON.deserialize(
+            JSON.serialize(combinedData.get('fieldData')), List<cls_fieldList>.class
+        );
+    
+        System.debug('Object Name: ' + objectName);
+        System.debug('Source: ' + source);
+        System.debug('Service: ' + service);
+        System.debug('Description: ' + description);
+        //System.debug('ETL Record: ' + etlRecord);
+        //System.debug('IntegrationChannel Record: ' + IntegrationRecord);
+        System.debug('Record Name 2: ' + recordName2);
+        System.debug('Record Name 3: ' + recordName3);
+        System.debug('Record Name 4: ' + recordName4);
+        System.debug('Record Name 5: ' + recordName5);
+        System.debug('Field List: ' + fieldList);
+    
+        lwapic__X200_OK_Connect_Table__c connectTable = new lwapic__X200_OK_Connect_Table__c();
+        connectTable.lwapic__ExternalSource__c = source;
+        connectTable.lwapic__Object_Name__c = objectName;
+        connectTable.lwapic__Service__c = service;
+    
         INSERT connectTable;
-        List<lwapic__X200_OK_Connect_Table_Field__c> recordsToInsert = new List<lwapic__X200_OK_Connect_Table_Field__c>();
-        for(cls_fieldList field : fieldList) {
-            System.debug('field = '+field);
-            System.debug('Name = '+field.name);
-            lwapic__X200_OK_Connect_Table_Field__c newRecord = new lwapic__X200_OK_Connect_Table_Field__c();
-            newRecord.lwapic__X200_OK_Connect_Table__c	     = connectTable.Id;
-            newRecord.lwapic__Field_Api_Name__c              = field.name;  
-            newRecord.lwapic__Type__c                        = field.fieldType;
-            newRecord.lwapic__Decimal_Places__c              = String.isEmpty(field.decimalValue) ? null : Decimal.valueOf(field.decimalValue);
-            newRecord.lwapic__Length__c                      = String.isEmpty(field.length) ? null : Integer.valueOf(field.length);
-            newRecord.lwapic__Filterable__c                  = field.filterable;
-            newRecord.lwapic__IsExternalId__c                = field.externalId;
-            newRecord.lwapic__Sortable__c                    = field.sortable;
-            System.debug('Preparing to insert: ' + newRecord);
+     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                   //Testing 
+        lwapic__Integration_Channel__c channelSelect =new lwapic__Integration_Channel__c();
+        channelSelect.lwapic__Channel_Name__c =	(source == 'ETL') ? 'ETL' : 'Integration Channel';
+        System.debug('Channel Name Set: ' + channelSelect.lwapic__Channel_Name__c);
 
+        //INSERT channelSelect;
+/    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        List<lwapic__X200_OK_Connect_Table_Field__c> recordsToInsert = new List<lwapic__X200_OK_Connect_Table_Field__c>();
+        
+        for(cls_fieldList field : fieldList) {
+            lwapic__X200_OK_Connect_Table_Field__c newRecord = new lwapic__X200_OK_Connect_Table_Field__c();
+            newRecord.lwapic__X200_OK_Connect_Table__c = connectTable.Id;
+            newRecord.lwapic__Field_Api_Name__c = field.name;
+            newRecord.lwapic__Type__c = field.fieldType;
+            newRecord.lwapic__Decimal_Places__c = String.isEmpty(field.decimalValue) ? null : Decimal.valueOf(field.decimalValue);
+            newRecord.lwapic__Length__c = String.isEmpty(field.length) ? null : Integer.valueOf(field.length);
+            newRecord.lwapic__Filterable__c = field.filterable;
+            newRecord.lwapic__IsExternalId__c = field.externalId;
+            newRecord.lwapic__Sortable__c = field.sortable;
+    
             recordsToInsert.add(newRecord);
         }
+    
         if (!recordsToInsert.isEmpty()) {
             insert recordsToInsert;
-            System.debug('recordsToInsert.get(0).Name:: '+recordsToInsert.get(0).Id);
-            lwapic__X200_OK_Connect_Table_Field__c result = [SELECT Id, lwapic__Field_Api_Name__c FROM lwapic__X200_OK_Connect_Table_Field__c WHERE Id =: recordsToInsert.get(0).Id ];
+            System.debug('Inserted records successfully');
+            System.debug('recordsToInsert.get(0).id:: '+recordsToInsert.get(0).Id);
+             lwapic__X200_OK_Connect_Table_Field__c result = [SELECT Id, lwapic__Field_Api_Name__c FROM lwapic__X200_OK_Connect_Table_Field__c WHERE Id =: recordsToInsert.get(0).Id ];
             System.debug('result '+result);
+
         }
     }
+    
+
 
     public class cls_fieldList {
         public Integer id ;
@@ -51,9 +103,3 @@ public with sharing class DataTable {
         public Boolean isLengthDisabled;
     }
     }
-
-
-
-
-
-   
