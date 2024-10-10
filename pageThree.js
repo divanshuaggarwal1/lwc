@@ -1,11 +1,9 @@
-import { LightningElement, track } from 'lwc';
+import { api, LightningElement, track } from 'lwc';
 import saveFieldData from '@salesforce/apex/DataTable.saveFieldData';
 export default class PageThree extends LightningElement {
     currentStep = '3';
     @track ind;
-     cardTitle = 'Data Virtualization - dd Object Configuration';
-
-    @track data = [
+    @track fieldData = [
         {
             id: 1,
             name: '',
@@ -33,66 +31,83 @@ export default class PageThree extends LightningElement {
         { label: 'Phone', value: 'Phone' },
         { label: 'Percent', value: 'Percent' }
     ];
-    decimalOptions= [];
-  
-        generateDecimalOptions(){  
-            for(let i=0; i<18; i++){
-                this.decimalOptions.push({label: i.toString(), value: i.toString()})
-            }
-        }
-    
-    handleAddRow() {    
-            const newId = this.data.length + 1;
-            this.data = [
-                ...this.data,
-                {
-                    id: newId,
-                    name: '',
-                    fieldType: '',
-                    decimalValue: '',
-                    length: '',
-                    filterable: false,
-                    externalId: false,
-                    sortable: false,
-                    disableDelete: false,
-                    isDecimalDisabled: false,
-                    isLengthDisabled: false
+    decimalOptions = [];
 
-                }
-            ];
-            this.setRowIndices();
-       
+
+    generateDecimalOptions() {
+        for (let i = 0; i < 18; i++) {
+            this.decimalOptions.push({ label: i.toString(), value: i.toString() })
+        }
+    }
+
+    handleAddRow() {
+        const newId = this.fieldData.length + 1;
+        //console.log("tesing progress2", this.fieldData);
+        this.fieldData = [
+            ...this.fieldData,
+            {
+                id: newId,
+                name: '',
+                fieldType: '',
+                decimalValue: '',
+                length: '',
+                filterable: false,
+                externalId: false,
+                sortable: false,
+                disableDelete: false,
+                isDecimalDisabled: false,
+                isLengthDisabled: false
+
+            }
+        ];
+        //console.log("tesing progress3", this.fieldData);
+
+        this.setRowIndices();
+
     }
 
     handleInputChange(event) {
-        const field = event.target.dataset.field;     
-          console.log("value::::" ,field);
+        try{
+
+        
+        const field = event.target.dataset.field;
 
         const id = event.target.dataset.id;
-        console.log("value::::" ,id);
         const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-       console.log("value::::" ,JSON.stringify(value));
-        this.data = this.data.map((row) => {
+       // console.log("tesing progress4", this.fieldData);
+       // console.log(`id : ${id}`);
+        this.fieldData = this.fieldData.map((row) => {
             if (row.id == id) {
+                //console.log(`field : ${field}`);
+                //console.log(`value : ${value}`);
                 const updatedRow = { ...row, [field]: value };
 
-                if (updatedRow.fieldType === 'Text' || updatedRow.fieldType === 'Date/Time' || updatedRow.fieldType === 'Date' || updatedRow.fieldType === 'Time' || updatedRow.fieldType === 'TextArea'|| updatedRow.fieldType === 'URL'|| updatedRow.fieldType === 'Phone'|| updatedRow.fieldType === 'Checkbox') {
+
+                if (updatedRow.fieldType === 'Text' || updatedRow.fieldType === 'Date/Time' || updatedRow.fieldType === 'Date' || updatedRow.fieldType === 'Time' || updatedRow.fieldType === 'TextArea' || updatedRow.fieldType === 'URL' || updatedRow.fieldType === 'Phone' || updatedRow.fieldType === 'Checkbox') {
                     updatedRow.isDecimalDisabled = true;
                 } else {
                     updatedRow.isDecimalDisabled = false;
                 }
 
-                if (updatedRow.fieldType === 'Date/Time' || updatedRow.fieldType === 'Date' || updatedRow.fieldType === 'Time' || updatedRow.fieldType === 'TextArea' || updatedRow.fieldType === 'URL'|| updatedRow.fieldType === 'Phone'|| updatedRow.fieldType === 'Checkbox') {
+                if (updatedRow.fieldType === 'Date/Time' || updatedRow.fieldType === 'Date' || updatedRow.fieldType === 'Time' || updatedRow.fieldType === 'TextArea' || updatedRow.fieldType === 'URL' || updatedRow.fieldType === 'Phone' || updatedRow.fieldType === 'Checkbox') {
                     updatedRow.isLengthDisabled = true;
                 } else {
                     updatedRow.isLengthDisabled = false;
                 }
-
+                //console.log(`this.fieldData :: ${JSON.stringify(this.fieldData)}`);
+                //console.log(`updatedRow : ${JSON.stringify(updatedRow)}`);
                 return updatedRow;
             }
+
             return row;
         });
-               
+        // Send a copy of the updated fieldData
+        this.dispatchEvent(new CustomEvent('fielddatachange', { 
+            detail: [...this.fieldData]  
+        }));
+    }catch(e) {
+        console.error('error :' , e.message);
+    }
     }
 
 
@@ -100,8 +115,8 @@ export default class PageThree extends LightningElement {
     handleDeleteRow(event) {
         const id = event.target.dataset.id;
 
-        if (this.data.length === 1) {
-            this.data = this.data.map((row) => {
+        if (this.fieldData.length === 1) {
+            this.fieldData = this.fieldData.map((row) => {
                 if (row.id == id) {
                     return {
                         ...row,
@@ -120,7 +135,7 @@ export default class PageThree extends LightningElement {
                 return row;
             });
         } else {
-            this.data = this.data.filter((row) => row.id != id);
+            this.fieldData = this.fieldData.filter((row) => row.id != id);
             this.setRowIndices();
         }
     }
@@ -131,37 +146,10 @@ export default class PageThree extends LightningElement {
     }
 
     setRowIndices() {
-        this.data = this.data.map((row, index) => ({
+        this.fieldData = this.fieldData.map((row, index) => ({
             ...row,
             index: index + 1
         }));
-    }
-
-        handleNext() {
-            console.log('this.data = ',this.data);
-            let allRowsData = [];
-            let isAllRowsValid = true;
-            this.data.forEach(row => {
-                if (!row.name && !row.fieldType) {
-                   isAllRowsValid = false; 
-                }
-            });
-            if (isAllRowsValid && this.data.length > 0) {
-                console.log('All filled rows data:', JSON.stringify(this.data));
-                    saveFieldData({ fieldData: JSON.stringify(this.data) })
-                    .then((result) => {
-                        console.log('Apex result:', result);
-                        this.currentStep = 'next';
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            } else {
-                console.log('Cannot Activate. Please fill all required fields for each row or delete invalid rows.');
-            }
-        }
-    handlePrevious() {
-        this.currentStep = '2';
     }
 
 }
