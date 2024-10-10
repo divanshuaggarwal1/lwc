@@ -1,145 +1,136 @@
 <template>
-    <lightning-card>
-        <div class="slds-card__body slds-card__body_inner">
-            <div
-                class="slds-p-top_small slds-p-bottom_medium slds-align_absolute-center slds-theme_default slds-text-heading_medium">
-                <b>Data Virtualization - dd Object Configuration</b>
-            </div>
-        </div>
+    <div class="slds-card__body slds-card__body_inner slds-border_top">
+        <div class="slds-box custom-margins">
+            <span class="border-text">Configuration</span>
+        <div class="inner-custom-margins">
+            <div class="slds-m-bottom_large">
 
-        <div class="slds-m-around_medium ">
             <div class="input-wrapper">
                 <div class="innerDiv">
-                    <div class="slds-grid slds-p-bottom_small " style="margin: 0;">
+                    <div class="slds-p-bottom_small "
+                        style="margin: 0; display: flex; width: 100%; position: relative; align-items: center;">
+                        <div class="" style="width: 20%;">
 
-
-                        <div class="slds-col slds-size_1-of-2 slds-p-none">
-                            <lightning-combobox name="dataSourceDropdown" label="Select Channel"
+                            <!-- Combobox to select the channel -->
+                            <lightning-combobox class="comboboxStyle" name="dataSourceDropdown" label="Select Channel for Data Source"
                                 placeholder="Select Channel" options={channelOptions} value={selectedValue}
                                 onchange={handleChannelChange}>
                             </lightning-combobox>
                         </div>
-                        <div class="slds-col slds-size_1-of-2 slds-p-none slds-m-left-none">
-                            <lightning-record-picker   label="Integration Channel for Data Source"
+                        <div class="slds-m-top_large" style="width: 80%;">
+
+                            <!-- Record picker and link for the first record -->
+                            <lightning-record-picker label="Channel for Data Source" class=" recordPickerStyle"
                                 placeholder="Select Data Source for Channel Integration Channel"
-                                object-api-name={selectedValue} value={selectedRecordId} onchange={handleRecordChange}
-                                required>
+                                object-api-name={selectedValue} value={records.recordId1} data-index="1"
+                                onchange={handleRecordChange}>
                             </lightning-record-picker>
+                        </div>
+                        <div class="slds-m-top_large" style="position: absolute;right: 4px;top: -24px;">
+                            <a href={records.data1} target="_blank" title="Open Record" class="icon-wrapper">
+                                <lightning-icon icon-name="utility:new_window" alternative-text="Open Record"
+                                    size="x-small"></lightning-icon>
+                                <span class="slds-assistive-text">Open Record</span>
+                            </a>
                         </div>
                     </div>
                 </div>
-
-                <div class="slds-m-top_large">
-                        <a href={data} target="_blank" title="Open Record" class="icon-wrapper">
-                            <lightning-icon icon-name="utility:new_window" alternative-text="Open Record"
-                                size="small"></lightning-icon>
-                            <span class="slds-assistive-text">Open Record</span>
-                        </a>
-                </div>
-
             </div>
 
-
-
-            <div class="slds-p-bottom_small input-wrapper">
+            <!-- Record picker and link for the second record -->
+            <div class="slds-p-bottom_small input-wrapper icon-design">
                 <div class="innerDiv">
+
                     <lightning-record-picker label="Integration Channel for Create New Data Record: Channel Mapping"
-                        placeholder="Select Data Source for Channel Integration Channel" object-api-name="Account"
-                        value={selectedRecordId1} onchange={handleRecordChange1}  required>
+                        placeholder="Select Data Source for Channel Integration Channel"
+                        object-api-name="lwapic__Integration_Channel__c" value={records.recordId2} data-index="2"
+                        onchange={handleRecordChange}>
                     </lightning-record-picker>
                 </div>
 
-                <div class="slds-m-top_large">
-                        <a href={data1} target="_blank" title="Open Record" class="icon-wrapper">
-                            <lightning-icon icon-name="utility:new_window" alternative-text="Open Record"
-                                size="small"></lightning-icon>
-                            <span class="slds-assistive-text">Open Record</span>
-                        </a>
+                <div class="slds-m-top_large icon-position">
+                    <a href={records.data2} target="_blank" title="Open Record" class="icon-wrapper">
+                        <lightning-icon icon-name="utility:new_window" alternative-text="Open Record"
+                            size="x-small"></lightning-icon>
+                        <span class="slds-assistive-text">Open Record</span>
+                    </a>
                 </div>
             </div>
 
-
-
-
-
-            <div class="slds-p-bottom_small input-wrapper">
+            <!-- Record picker and link for the third record -->
+            <div class="slds-p-bottom_small input-wrapper icon-design">
                 <div class="innerDiv">
+
                     <lightning-record-picker label="Integration Channel for Update Existing Record: Channel Mapping"
-                        placeholder="Select Data Source for Channel Integration Channel" object-api-name="Account"
-                        value={selectedRecordId2} onchange={handleRecordChange2}  required>
+                        placeholder="Select Data Source for Channel Integration Channel"
+                        object-api-name="lwapic__Integration_Channel__c" value={records.recordId3} data-index="3"
+                        onchange={handleRecordChange}>
                     </lightning-record-picker>
                 </div>
-                <div class="slds-m-top_large">
-                        <a href={data2} target="_blank" title="Open Record" class="icon-wrapper">
-                            <lightning-icon icon-name="utility:new_window" alternative-text="Open Record"
-                                size="small"></lightning-icon>
-                            <span class="slds-assistive-text">Open Record</span>
-                        </a>
-                </div>
 
+                <div class="slds-m-top_large icon-position">
+                    <a href={records.data3} target="_blank" title="Open Record" class="icon-wrapper">
+                        <lightning-icon icon-name="utility:new_window" alternative-text="Open Record"
+                            size="x-small"></lightning-icon>
+                        <span class="slds-assistive-text">Open Record</span>
+                    </a>
+                </div>
             </div>
 
 
 
 
-
-            <div class="slds-p-bottom_small input-wrapper">
-
+            <!-- Record picker and link for the fourth record -->
+            <div class="slds-p-bottom_small input-wrapper icon-design">
                 <div class="innerDiv">
 
                     <lightning-record-picker label="Integration Channel for Delete"
-                        placeholder="Select Data Source for Channel Integration Channel" object-api-name="Account"
-                        value={selectedRecordId3} onchange={handleRecordChange3}  required>
+                        placeholder="Select Data Source for Channel Integration Channel"
+                        object-api-name="lwapic__Integration_Channel__c" value={records.recordId4} data-index="4"
+                        onchange={handleRecordChange}>
                     </lightning-record-picker>
                 </div>
-                <div class="slds-m-top_large">
-                        <a href={data3} target="_blank" title="Open Record" class="icon-wrapper">
-                            <lightning-icon icon-name="utility:new_window" alternative-text="Open Record"
-                                size="small"></lightning-icon>
-                            <span class="slds-assistive-text">Open Record</span>
-                        </a>
-
+                <div class="slds-m-top_large icon-position">
+                    <a href={records.data4} target="_blank" title="Open Record" class="icon-wrapper">
+                        <lightning-icon icon-name="utility:new_window" alternative-text="Open Record"
+                            size="x-small"></lightning-icon>
+                        <span class="slds-assistive-text">Open Record</span>
+                    </a>
                 </div>
             </div>
 
 
 
 
-            <div class="slds-p-bottom_small input-wrapper">
+
+
+
+            <!-- Record picker and link for the fifth record -->
+            <div class="slds-p-bottom_small input-wrapper icon-design">
                 <div class="innerDiv">
+
                     <lightning-record-picker label="Integration Channel for Data Search: Channel Mapping"
-                        placeholder="Select Data Source for Channel Integration Channel" object-api-name="Account"
-                        value={selectedRecordId4} onchange={handleRecordChange4}  required>
+                        placeholder="Select Data Source for Channel Integration Channel"
+                        object-api-name="lwapic__Integration_Channel__c" value={records.recordId5} data-index="5"
+                        onchange={handleRecordChange}>
                     </lightning-record-picker>
                 </div>
-                <div class="slds-m-top_large">
-                        <a href={data4} target="_blank" title="Open Record" class="icon-wrapper">
-                            <lightning-icon icon-name="utility:new_window" alternative-text="Open Record"
-                                size="small"></lightning-icon>
-                            <span class="slds-assistive-text">Open Record</span>
-                        </a>
+
+                <div class="slds-m-top_large icon-position">
+                    <a href={records.data5} target="_blank" title="Open Record" class="icon-wrapper">
+                        <lightning-icon icon-name="utility:new_window" alternative-text="Open Record"
+                            size="x-small"></lightning-icon>
+                        <span class="slds-assistive-text">Open Record</span>
+                    </a>
                 </div>
             </div>
 
-
-
-            <div class="slds-grid slds-m-top_medium slds-grid_vertical-align-center">
-
-                <lightning-button label="Previous" variant="neutral" onclick={handlePrevious}></lightning-button>
-
-                <div class="slds-col slds-text-align_center">
-                    <lightning-progress-indicator current-step="2" type="base" variant="base">
-                        <lightning-progress-step label="Step One" value="1"></lightning-progress-step>
-                        <lightning-progress-step label="Step Two" value="2"></lightning-progress-step>
-                        <lightning-progress-step label="Step Three" value="3"></lightning-progress-step>
-                    </lightning-progress-indicator>
-                </div>
-
-                <lightning-button label="Next" variant="brand" onclick={handleNext}></lightning-button>
-
-            </div>
         </div>
+        </div>
+    </div>
+    </div>
 
-
-    </lightning-card>
 </template>
+
+
+
