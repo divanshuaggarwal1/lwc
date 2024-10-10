@@ -7,7 +7,21 @@
     margin-bottom: 10px;
 
 }
-.des{
+/* .des{
     margin-top: 20px;
 
+} */
+/* .des {
+    max-height: 150px; 
+    min-height: 0px; 
+    overflow-y: auto;  
+} */
+/* .custom-textarea textarea {
+    min-height: 100px; 
+    max-height: 300px;  
+    overflow-y: auto;  
+    resize: none;       
+} */
+.custom-textarea {
+    --sds-c-textarea-sizing-min-height:0px;
 }
