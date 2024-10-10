@@ -15,7 +15,44 @@
     width: 100%;
     justify-content: space-between;
 }
+.icon-design{
+    margin: 0; 
+    position: relative; 
+}
+.icon-position{
+    position: absolute;
+    right: 4px;
+    top: -24px;
+}
 
 .innerDiv {
     width: 100%;
+}
+.custom-margins {
+       margin-top: 40px;
+       margin-right: 90px;
+       margin-bottom: 40px;
+       margin-left: 90px;
+       border-radius: 25px;
+       position: relative; 
+       border-color: lightseagreen;
+    
+}
+.inner-custom-margins{
+    margin-top: 10px;
+    margin-right: 80px;
+    margin-bottom: 20px;
+    margin-left: 80px;
+
+}
+.border-text {
+    position: absolute;
+    top: -25px; 
+    left: 23px; 
+    background-color: white; 
+    padding: 4px; 
+    font-weight: bold;
+    color: lightblue;
+    font-size: 24px; 
+    z-index: 1; 
 }
