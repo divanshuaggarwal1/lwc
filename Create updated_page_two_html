@@ -1,0 +1,168 @@
+<template>
+    <div class="slds-card__body slds-card__body_inner slds-border_top">
+        <div class="slds-box custom-margins">
+            <span class="border-text">Configuration</span>
+            <div class="inner-custom-margins">
+                <div class="slds-grid slds-wrap slds-card__body slds-card__body_inner slds-border_top">
+                    <div class=" slds-col slds-size_1-of-3 " style="padding:10px">
+                        <lightning-combobox class=" comboboxStyle" name="dataSourceDropdown"
+                            label="Select Channel for Data Source" placeholder="Select Channel" options={channelOptions}
+                            value={selectedValue} onchange={handleChannelChange}>
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3" style="padding:10px">
+                        <label class="slds-form-element__label" for="text-input-id-1">Channel for Data Source</label>
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                            <lightning-icon size="x-small"
+                                class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default"
+                                icon-name="utility:search">
+                            </lightning-icon>
+                            <input type="text"
+                                            placeholder="Select Data Source for Channel Integration Channel"
+                                            class="slds-input"
+                                            onkeyup={handleRecordChange}
+                                            value={selectedInputValue} />
+                        </div>
+
+                        <template if:true={hidePicklistSection}>
+                            <ul class="slds-box slds-theme_default results-overlay" style="width: 65%;">
+                                <template for:each={recordsResult} for:item="record">
+                                    <li key={record.Id} class="slds-item" onclick={handleSelectRecord}
+                                        data-id={record.Id}>
+                                        <span>{record.Name}</span>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+
+                    </div>
+                    <!-- Second Picker -->
+                    <div class="slds-p-bottom_small input-wrapper icon-design">
+                        <div class="innerDiv">
+                            <div class="slds-col slds-size_1-of-1" style="padding:10px">
+                                <label class="slds-form-element__label" for="text-input-id-2">Integration Channel for Create New Data Record: Channel Mapping</label>
+                                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                                    <lightning-icon size="x-small"
+                                        class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default"
+                                        icon-name="utility:search">
+                                    </lightning-icon>
+                                    <input type="text"
+                                        placeholder="Select Data Source for Channel Integration Channel"
+                                        class="slds-input" 
+                                        onkeyup={handleRecordSecondChange}
+                                        value={selectedSecondInputValue} />
+                                </div>
+                                <template if:true={hidePicklistSectionTwo}>
+                                    <ul class="slds-box slds-theme_default results-overlay" style="width: 100%;">
+                                        <template for:each={recordsResultTwo} for:item="record">
+                                            <li key={record.Id} class="slds-item" onclick={handleSelectRecordTwo}
+                                                data-id={record.Id}>
+                                                <span>{record.Name}</span>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </template>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Third Picker -->
+
+                    
+                    <div class="slds-p-bottom_small input-wrapper icon-design">
+                        <div class="innerDiv">
+                            <div class="slds-col slds-size_1-of-1" style="padding:10px">
+                                <label class="slds-form-element__label" for="text-input-id-3">Integration Channel for Update Existing Record: Channel Mapping</label>
+                                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                                    <lightning-icon size="x-small" 
+                                        class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default"
+                                        icon-name="utility:search">
+                                    </lightning-icon>
+                                    <input type="text" id="text-input-id-3"
+                                        placeholder="Select Data Source for Channel Integration Channel"
+                                        class="slds-input" 
+                                        onkeyup={handleRecordThirdChange} 
+                                        value={selectedThirdInputValue} />
+                                </div>
+                                <template if:true={hidePicklistSectionThird}>
+                                    <ul class="slds-box slds-theme_default results-overlay" style="width: 100%;">
+                                        <template for:each={recordsResultThird} for:item="record">
+                                            <li key={record.Id} class="slds-item" onclick={handleSelectRecordThird} data-id={record.Id}>
+                                                <span>{record.Name}</span>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                                        <!-- Forth Picker -->
+
+                    <div class="slds-p-bottom_small input-wrapper icon-design">
+                        <div class="innerDiv">
+                            <div class="slds-col slds-size_1-of-1" style="padding:10px">
+                                <label class="slds-form-element__label" for="text-input-id-4">Integration Channel for Delete</label>
+                                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                                    <lightning-icon size="x-small" 
+                                        class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default"
+                                        icon-name="utility:search">
+                                    </lightning-icon>
+                                    <input type="text" id="text-input-id-4"
+                                        placeholder="Select Data Source for Channel Integration Channel"
+                                        class="slds-input" data-index="4" 
+                                        onkeyup={handleRecordForthChange} 
+                                        value={selectedForthInputValue} />
+                                </div>
+                                <template if:true={hidePicklistSectionForth}>
+                                    <ul class="slds-box slds-theme_default results-overlay" style="width: 100%;">
+                                        <template for:each={recordsResultForth} for:item="record">
+                                            <li key={record.Id} class="slds-item" onclick={handleSelectRecordForth} data-id={record.Id}>
+                                                <span>{record.Name}</span>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fifth Picker -->
+                    <div class="slds-p-bottom_small input-wrapper icon-design">
+                        <div class="innerDiv">
+                            <div class="slds-m-top_large recordPickerStyle" style="width: 100%;">
+                                <label class="slds-form-element__label" for="text-input-id-5">Integration Channel for Data Search: Channel Mapping</label>
+                                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                                    <lightning-icon size="x-small" 
+                                        class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default"
+                                        icon-name="utility:search">
+                                    </lightning-icon>
+                                    <input type="text" id="text-input-id-5"
+                                        placeholder="Select Data Source for Channel Integration Channel"
+                                        class="slds-input" data-index="5" 
+                                        onkeyup={handleRecordFifthChange} 
+                                        value={selectedFifthInputValue} />
+                                </div>
+                                <template if:true={hidePicklistSectionFifth}>
+                                    <ul class="slds-box slds-theme_default results-overlay" style="width: 100%;">
+                                        <template for:each={recordsResultFifth} for:item="record">
+                                            <li key={record.Id} class="slds-item" onclick={handleSelectRecordFifth} data-id={record.Id}>
+                                                <span>{record.Name}</span>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </template>
+                            </div>
+                        </div>
+                        </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</template>
