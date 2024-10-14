@@ -1,0 +1,216 @@
+import { LightningElement, track, api } from 'lwc';
+import { loadStyle } from 'lightning/platformResourceLoader';
+import getRecordName from '@salesforce/apex/DataTable.getRecordName';
+import getRecord from '@salesforce/apex/DataTable.getRecord';
+import RemoveLWCCss from '@salesforce/resourceUrl/RemoveLWCCss';
+export default class Pagetwo extends LightningElement {
+    selectedValue = 'lwapic__Integration_Channel__c';
+    selectedInputValue = '';
+    selectedSecondInputValue = '';
+    selectedThirdInputValue = '';
+    selectedForthInputValue = '';
+    selectedFifthInputValue = '';
+    recordsResult;
+    recordsResultTwo;
+    recordsResultThird;
+    recordsResultForth;
+    recordsResultFifth;
+    hidePicklistSection = false;
+    hidePicklistSectionTwo = false;
+    hidePicklistSectionThird = false;
+    hidePicklistSectionForth = false;
+    hidePicklistSectionFifth = false;
+    recordsFullData = [];
+    recordsFullDataTwo = [];
+    recordsFullDataThird = [];
+    recordsFullDataForth = [];
+    recordsFullDataFifth = [];
+    channelOptions = [
+        { label: 'Integration Channel', value: 'lwapic__Integration_Channel__c' },
+        { label: 'ETL', value: 'lwapic__ETL__c' },
+    ];
+    handleChannelChange(event) {
+        this.selectedValue = event.detail.value;
+    }
+    handleRecordChange(event) {
+        let nameLetter = event.target.value;
+        this.selectedInputValue = nameLetter;
+        if (nameLetter) {
+            getRecord({ objectName: this.selectedValue, nameLetter: nameLetter })
+                .then(recordMap => {
+                    this.hidePicklistSection = true;
+                    console.log('Fetched records:', JSON.stringify(recordMap));
+                    this.recordsResult = recordMap;
+                })
+                .catch(error => {
+                    console.error('Error fetching record name:', error);
+                });
+        }
+        else {
+            this.hidePicklistSection = false;
+        }
+    }
+    handleSelectRecord(event) {
+        this.recordsFullData = [];
+        let recordId = event.currentTarget.dataset.id; // Get the clicked record's ID
+        const selectedRecord = this.recordsResult.find(record => record.Id === recordId);
+        console.log('selectedRecord', selectedRecord);
+        this.selectedInputValue = selectedRecord.Name;
+        if (selectedRecord) {
+            this.hidePicklistSection = false;
+            let newEntry = {
+                Id: selectedRecord.Id,
+                recordName: selectedRecord.Name,
+            };
+            this.recordsFullData.push(newEntry);
+            console.log('this.recordsFullData', JSON.stringify(this.recordsFullData));
+        }
+
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    handleRecordSecondChange(event) {
+        let nameLetterTwo = event.target.value;
+        this.selectedSecondInputValue =  nameLetterTwo;
+        if (nameLetterTwo) {
+            getRecord({ objectName: 'lwapic__Integration_Channel__c', nameLetter: nameLetterTwo })
+                .then(recordMap => {
+                    this.hidePicklistSectionTwo = true;
+                    console.log('Fetched records:', JSON.stringify(recordMap));
+                    this.recordsResultTwo = recordMap;
+                })
+                .catch(error => {
+                    console.error('Error fetching record name:', error);
+                });
+        }
+        else {
+            this.hidePicklistSectionTwo = false;
+        }
+    }
+    handleSelectRecordTwo(event) {
+        this.recordsFullDataTwo = [];
+        let recordId = event.currentTarget.dataset.id; // Get the clicked record's ID
+        const selectedRecordTwo = this.recordsResultTwo.find(record => record.Id === recordId);
+        console.log('selectedRecordTwo', selectedRecordTwo);
+        this.selectedSecondInputValue = selectedRecordTwo.Name;
+        if (selectedRecordTwo) {
+            this.hidePicklistSectionTwo = false;
+            let newEntry = {
+                Id: selectedRecordTwo.Id,
+                recordName: selectedRecordTwo.Name,
+            };
+            this.recordsFullDataTwo.push(newEntry);
+            console.log('this.recordsFullData', JSON.stringify(this.recordsFullDataTwo));
+        }
+
+    }
+//////////////////////////////////////////////////////////////////////
+handleRecordThirdChange(event) {
+    let nameLetterThird = event.target.value;
+    this.selectedThirdInputValue =  nameLetterThird;
+    if (nameLetterThird) {
+        getRecord({ objectName: 'lwapic__Integration_Channel__c', nameLetter: nameLetterThird })
+            .then(recordMap => {
+                this.hidePicklistSectionThird = true;
+                console.log('Fetched records:', JSON.stringify(recordMap));
+                this.recordsResultThird = recordMap;
+            })
+            .catch(error => {
+                console.error('Error fetching record name:', error);
+            });
+    }
+    else {
+        this.hidePicklistSectionThird = false;
+    }
+}
+handleSelectRecordThird(event) {
+    this.recordsFullDataThird = [];
+    let recordId = event.currentTarget.dataset.id; // Get the clicked record's ID
+    const selectedRecordThird = this.recordsResultThird.find(record => record.Id === recordId);
+    console.log('selectedRecordThird', selectedRecordThird);
+    this.selectedThirdInputValue = selectedRecordThird.Name;
+    if (selectedRecordThird) {
+        this.hidePicklistSectionThird = false;
+        let newEntry = {
+            Id: selectedRecordThird.Id,
+            recordName: selectedRecordThird.Name,
+        };
+        this.recordsFullDataThird.push(newEntry);
+        console.log('this.recordsFullData', JSON.stringify(this.recordsFullDataThird));
+    }
+
+}
+///////////////////////////////////////////////////////////////////////////////////////
+
+handleRecordForthChange(event) {
+    let nameLetterForth = event.target.value;
+    this.selectedForthInputValue =  nameLetterForth;
+    if (nameLetterForth) {
+        getRecord({ objectName: 'lwapic__Integration_Channel__c', nameLetter: nameLetterForth })
+            .then(recordMap => {
+                this.hidePicklistSectionForth = true;
+                console.log('Fetched records:', JSON.stringify(recordMap));
+                this.recordsResultForth = recordMap;
+            })
+            .catch(error => {
+                console.error('Error fetching record name:', error);
+            });
+    }
+    else {
+        this.hidePicklistSectionForth = false;
+    }
+}
+handleSelectRecordForth(event) {
+    this.recordsFullDataForth = [];
+    let recordId = event.currentTarget.dataset.id; // Get the clicked record's ID
+    const selectedRecordForth = this.recordsResultForth.find(record => record.Id === recordId);
+    console.log('selectedRecordForth', selectedRecordForth);
+    this.selectedForthInputValue = selectedRecordForth.Name;
+    if (selectedRecordForth) {
+        this.hidePicklistSectionForth = false;
+        let newEntry = {
+            Id: selectedRecordForth.Id,
+            recordName: selectedRecordForth.Name,
+        };
+        this.recordsFullDataForth.push(newEntry);
+        console.log('this.recordsFullDataForth', JSON.stringify(this.recordsFullDataForth));
+    }
+
+}
+//////////////////////////////////////////////////////////////////
+handleRecordFifthChange(event) {
+    let nameLetterFifth = event.target.value;
+    this.selectedFifthInputValue =  nameLetterFifth;
+    if (nameLetterFifth) {
+        getRecord({ objectName: 'lwapic__Integration_Channel__c', nameLetter: nameLetterFifth })
+            .then(recordMap => {
+                this.hidePicklistSectionFifth = true;
+                console.log('Fetched records:', JSON.stringify(recordMap));
+                this.recordsResultFifth = recordMap;
+            })
+            .catch(error => {
+                console.error('Error fetching record name:', error);
+            });
+    }
+    else {
+        this.hidePicklistSectionFifth = false;
+    }
+}
+handleSelectRecordFifth(event) {
+    this.recordsFullDataFifth = [];
+    let recordId = event.currentTarget.dataset.id; // Get the clicked record's ID
+    const selectedRecordFifth = this.recordsResultFifth.find(record => record.Id === recordId);
+    console.log('selectedRecordForth', selectedRecordForth);
+    this.selectedFifthInputValue = selectedRecordFifth.Name;
+    if (selectedRecordFifth) {
+        this.hidePicklistSectionFifth = false;
+        let newEntry = {
+            Id: selectedRecordFifth.Id,
+            recordName: selectedRecordFifth.Name,
+        };
+        this.recordsFullDataFifth.push(newEntry);
+        console.log('this.recordsFullDataFifth', JSON.stringify(this.recordsFullDataFifth));
+    }
+
+}
+}
