@@ -1,0 +1,61 @@
+<template>
+    <!-- modal start -->
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+        class="slds-modal slds-fade-in-open slds-modal_large">
+        <div class="slds-modal__container">
+            <lightning-button-icon icon-name="utility:close" variant="bare-inverse" size="large"
+                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverseslds-modal__close close-button"
+                onclick={handleCloseModal}>
+            </lightning-button-icon>
+            <div class="slds-modal__header">
+                <h1 class="slds-modal__title slds-hyphenate headerStyle">{icChannelHeader}</h1>
+                <p class="slds-m-top_x-small">{icChannelHeaderDesc}</p>
+            </div>
+            <div style="overflow: auto">
+                <section class="slds-modal__content slds-var-p-around_medium integration-connector-section">
+                    <c-icc-datatable table-details={tableDetails} table-header="Connector Details"></c-icc-datatable>
+                </section>
+                <section class="slds-modal__content slds-var-p-around_medium integration-connector-section">
+                    <ul>
+                        <template for:each={jsonDataRows} for:item="item">
+                            <li key={item.label}>
+                                <b>{item.label}:</b>
+                                <p>{item.value}</p>
+                            </li>
+                        </template>
+                    </ul>
+
+
+
+
+
+                </section>
+                <section class="slds-modal__content slds-var-p-around_medium integration-connector-section">
+                    <c-icc-datatable table-details={tableServiceDetails}
+                        table-header="Service Details"></c-icc-datatable>
+                </section>
+
+                <section class="slds-modal__content slds-var-p-around_medium integration-connector-section">
+
+                    <ul>
+                        <template for:each={serviceJsonDataRows} for:item="item">
+                            <li key={item.label}>
+                                <b>{item.label}:</b>
+                                <p>{item.value}</p>
+                            </li>
+                        </template>
+                    </ul>
+                </section>
+
+
+            </div>
+
+
+            <div class="slds-modal__footer ">
+                <lightning-button label="Cancel" variant="neutral" onclick={handlePrevious}></lightning-button>
+                <lightning-button label="submit" variant="brand" onclick={handleSubmit}></lightning-button>
+            </div>
+        </div>
+    </section>
+    <!-- modal end -->
+</template>

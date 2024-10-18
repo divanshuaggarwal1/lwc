@@ -1,0 +1,90 @@
+<template>
+    <div>
+        <div>
+            <p class="slds-p-around_small slds-m-bottom_medium" style="background-color: #f3f3f3; width: 100%;">
+                {tableHeader}</p>
+            <template if:true={tableDetails}>
+                <table class="slds-table slds-table_cell-buffer  " style="table-layout:fixed">
+                    <tr key={eachHeader.label} class="slds-line-height_reset ">
+                        <template for:each={tableDetails.headers} for:item="eachHeader">
+
+                            <th key={eachHeader.label}>
+                                <div style="font-size: medium">
+                                    {eachHeader.label}
+                                </div>
+                            </th>
+
+                        </template>
+                    </tr>
+                    <template for:each={tableDetails.rows} for:item="eachRow">
+                        <tr key={eachRow.label}
+                            style=" border-left: none; border-right: none; border-bottom:  1px solid gray; border-top:  1px solid gray;">
+                            <!-- <td>{eachRow.label}</td> -->
+                                <td>{eachRow.label}</td>
+                            <td class="slds-cell-wrap" scope="col" style="padding:5px">
+                                <template lwc:if={eachRow.showText}>
+                                   <span>{eachRow.Value}</span> 
+                                </template>
+                                <template lwc:if={eachRow.showUrl}>
+                                    <a href={eachRow.Value}>{eachRow.Value}</a>
+
+                                </template>
+                                <template lwc:if={eachRow.showBoolean}>
+                                    <lightning-input type="toggle" 
+                                        checked={eachRow.value}></lightning-input>
+                                </template>
+                                <template lwc:if={eachRow.showNumber}>
+                                       <span>{eachRow.Value}</span> 
+                                </template>
+                                <!-- <template lwc:if={eachRow.showJSON}>
+                                        <span>{eachRow.Value}</span>
+                                </template> -->
+                            </td>
+                        </tr>
+                    </template>
+                </table>
+            </template>
+            <!-- <template if:true={tableDetails.length}>
+                <table class="slds-table slds-table_cell-buffer  " style="table-layout:fixed">
+                    <thead>
+
+                        <template for:each={tableDetails} for:item="label">
+                            <template for:each={label} for:item="labelHeader">
+                                <tr key={labelHeader.header} class="slds-line-height_reset ">
+                                    <th colspan="2" key={labelHeader.header} scope="col">
+                                        <div style="font-size: medium">
+                                            {labelHeader.header}
+                                        </div>
+                                    </th>
+                                </tr>
+                                <template for:each={labelHeader.details} for:item="details">
+                                    <tr key={details.label}
+                                        style=" border-left: none; border-right: none; border-bottom:  1px solid gray; border-top:  1px solid gray;">
+                                        <template lwc:if={details.json}>
+
+
+                                        </template>
+
+
+                                        <template lwc:else>
+                                            <td class="slds-cell-wrap" scope="col" style="padding:5px">
+                                                <b>{details.label}</b></td>
+                                            <td class="slds-cell-wrap" scope="col" style="padding:5px">{details.Value}
+                                            </td>
+                                        </template>
+
+
+
+                                    </tr>
+
+                                </template>
+
+                            </template>
+                        </template>
+
+                    </thead>
+                </table>
+            </template> -->
+        </div>
+    </div>
+</template>
